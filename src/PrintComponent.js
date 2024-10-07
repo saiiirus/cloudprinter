@@ -4,6 +4,7 @@ const PrintComponent = () => {
   const [ws, setWs] = useState(null);
 
   useEffect(() => {
+  setTimeout(() => {
     const socket = new WebSocket("ws://180.232.37.26:8080");
     setWs(socket);
 
@@ -29,15 +30,21 @@ const PrintComponent = () => {
         socket.close();
       }
     };
-  }, []);
+  }, 1000); // 1 second delay before attempting to connect
+}, []);
+
 
   const handlePrint = () => {
-    if (ws) {
-      const printData = "Print this receipt"; // Customize this with your print data
-      console.log("Sending to WebSocket server:", printData); // Add this line
-      ws.send(printData);
-    }
-  };
+  if (ws) {
+    const printData = "Print this receipt"; // Customize this with your print data
+    console.log("Sending print data:", printData); // Log the print data
+    ws.send(printData);
+  } else {
+    console.error("WebSocket not connected");
+  }
+};
+  
+  
 
   return (
     <div>

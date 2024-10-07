@@ -13,18 +13,13 @@ const wss = new WebSocket.Server({ server });
 wss.on("connection", (ws) => {
   console.log("Client connected to WebSocket server");
 
-  // Handle messages from the client
+  // Simulate sending a message to the client
+  setTimeout(() => {
+    ws.send("Test print data from server");
+  }, 3000); // Send after 3 seconds
+
   ws.on("message", (message) => {
     console.log("Received message:", message);
-    // Forward the message to the printer or any other logic
-    // You can send the data back to connected clients if needed
-  });
-
-  ws.on("close", () => {
-    console.log("Client disconnected");
-  });
-
-  ws.on("error", (error) => {
-    console.error("WebSocket error:", error);
+    ws.send(message);    
   });
 });
