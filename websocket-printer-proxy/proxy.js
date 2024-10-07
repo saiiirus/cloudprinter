@@ -10,14 +10,20 @@ const PRINTER_PORT = 9100;
 
 // Connect to cloud WebSocket server
 const ws = new WebSocket(CLOUD_WS_URL);
+const testPrintData = "Hello Printer!";
 
 ws.on("open", () => {
   console.log("Connected to cloud WebSocket server");
 });
 
 ws.on("message", (data) => {
-  console.log("Received print job from cloud:", data);
-  sendToPrinter(data);
+  console.log("Received print job from cloud:", data); // Log received data
+  if (data) {
+    console.log("Data to send to printer:", data); // Ensure data is logged before sending
+    sendToPrinter(data);
+  } else {
+    console.log("No data received from WebSocket");
+  }
 });
 
 ws.on("close", () => {
@@ -32,16 +38,16 @@ ws.on("error", (error) => {
 function sendToPrinter(printData) {
   const client = new net.Socket();
   client.connect(PRINTER_PORT, PRINTER_IP, () => {
-    console.log("Connected to printer");
-    client.write(printData);
+    console.log("**********Connected to printer");
+    client.write(printData.toString());
     client.end();
   });
 
   client.on("error", (err) => {
-    console.error("Printer connection error:", err);
+    console.error("**************Printer connection error:", err);
   });
 
   client.on("close", () => {
-    console.log("Connection to printer closed");
+    console.log("*****************Connection to printer closed");
   });
 }

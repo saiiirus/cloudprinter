@@ -9,6 +9,7 @@ const PrintComponent = () => {
 
     socket.onopen = () => {
       console.log("Connected to WebSocket server");
+      console.log("WebSocket state:", socket.readyState);
     };
 
     socket.onmessage = (event) => {
@@ -33,6 +34,7 @@ const PrintComponent = () => {
   const handlePrint = () => {
     if (ws) {
       const printData = "Print this receipt"; // Customize this with your print data
+      console.log("Sending to WebSocket server:", printData); // Add this line
       ws.send(printData);
     }
   };
