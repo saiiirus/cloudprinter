@@ -1,0 +1,21 @@
+{
+  "name": "websocket-cloud-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run proxy\" \"npm run client\"",
+    "server": "node server.js",
+    "proxy": "node ../websocket-printer-proxy/proxy.js",
+    "client": "cd ../ && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run proxy\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.0.1",
+    "express": "^4.21.0",
+    "ws": "^8.18.0"
+  }
+}
